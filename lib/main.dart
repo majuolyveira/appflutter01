@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,18 +13,30 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 229, 211, 8)),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 229, 211, 8)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter App'),
+      initialRoute: '/',
+      routes: ({
+        '/': (context) => LoginPage(),
+        '/home': (context) => MyHomePage(
+              title: 'home',
+              onLogout: () {
+                Navigator.of(context).pushReplacementNamed('/');
+              },
+            ),
+      }),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title, required this.onLogout})
+      : super(key: key);
 
   final String title;
+  final VoidCallback onLogout;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -48,6 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter = 0;
     });
+  }
+
+  void _logout() {
+    widget.onLogout();
   }
 
   @override
@@ -93,12 +110,24 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _restartCounter,
-        tooltip: 'Restart',
-        backgroundColor: Color.fromARGB(255, 203, 183, 4),
-        child: const Icon(Icons.restart_alt),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: _restartCounter,
+            tooltip: 'Restart',
+            backgroundColor: Color.fromARGB(255, 203, 183, 4),
+            child: const Icon(Icons.restart_alt),
+          ),
+          SizedBox(width: 16),
+          FloatingActionButton(
+            onPressed: _logout,
+            tooltip: 'Logout',
+            backgroundColor: Colors.red,
+            child: const Icon(Icons.logout),
+          ),
+        ],
+      ),
     );
   }
 }
