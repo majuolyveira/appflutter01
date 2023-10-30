@@ -50,17 +50,17 @@ class _LoginPageState extends State<LoginPage> {
                 if (email == "admin" && senha == "1234") {
                   Navigator.of(context).pushReplacementNamed('/home');
 
-                //   Navigator.of(context).push(MaterialPageRoute(
-                //     builder: (context) => MyHomePage(title: 'Home'),
-                //   ));
-
-                }else{
+                  //   Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => MyHomePage(title: 'Home'),
+                  //   ));
+                } else {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text('Erro!'),
-                        content: Text('Usuário ou senha inválidos. Tente novamente.'),
+                        content: Text(
+                            'Usuário ou senha inválidos. Tente novamente.'),
                         actions: <Widget>[
                           TextButton(
                             child: Text('OK'),
